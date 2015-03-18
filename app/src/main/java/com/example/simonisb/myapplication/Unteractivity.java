@@ -13,12 +13,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.simonisb.myapplication.db.SQLiteDatabaseHelper;
@@ -28,12 +30,14 @@ import java.util.ArrayList;
 
 public class Unteractivity extends ActionBarActivity {
 
+    private static final String TAG = "Unteractivity";
     SQLiteDatabaseHelper dbhelper;
 
     EditText editText;
     Button btn_insert;
     Button btn_read;
     ListView mlist;
+    SQLiteDatabase db;
 
 
     @Override
@@ -48,7 +52,7 @@ public class Unteractivity extends ActionBarActivity {
 
 
         dbhelper = new SQLiteDatabaseHelper( this);
-        final SQLiteDatabase db = dbhelper.getReadableDatabase();
+        db = dbhelper.getReadableDatabase();
 
         btn_insert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,37 +70,64 @@ public class Unteractivity extends ActionBarActivity {
         btn_read.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String[] projektion = {SQLiteDatabaseHelper.TABLE_STRINGS_VALUE};
-                try{
-                    Cursor cursor2 = db.query(
-                        SQLiteDatabaseHelper.TABLE_STRINGS_TABLENAME,
-                        projektion,
-                        null, null, null, null, null);
-
-                       Cursor cursor =db.rawQuery("SELECT * FROM " + SQLiteDatabaseHelper.TABLE_STRINGS_TABLENAME , null);
-
-
-                    ArrayList<String> liste = new ArrayList<String>();
-
-                    if (cursor.moveToFirst()) {
-                        do {
-                            int valueIndex = cursor.getColumnIndex(SQLiteDatabaseHelper.TABLE_STRINGS_VALUE);
-                            String str = cursor.getString(valueIndex);
-                            liste.add(str);
-                        } while (cursor.moveToNext());
-                    }
-
-                    ArrayAdapter adapter = new ArrayAdapter(Unteractivity.this,
-                            android.R.layout.simple_list_item_1, liste);
-
-                    mlist.setAdapter(adapter);
-
-                    Log.d("Unteractivity", "TempCode");
-                }catch (Exception e) {
-                         e.getMessage();
-                }
+                showElementsInList();
             }
         });
+
+        mlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d(TAG, "onItemClick in Unteractivity");
+                deleteClickedItem(view);
+                showElementsInList();
+            }
+        });
+    }
+
+    private void deleteClickedItem(View view) {
+        String str = "";
+        if (view instanceof TextView)
+        {
+            str = ((TextView) view).getText().toString();
+        }
+        db.delete(SQLiteDatabaseHelper.TABLE_STRINGS_TABLENAME, SQLiteDatabaseHelper.TABLE_STRINGS_VALUE + " = ?", new String[]{str});
+    }
+
+    private void showElementsInList() {
+        String[] projektion = {SQLiteDatabaseHelper.TABLE_STRINGS_VALUE};
+        // How you want the results sorted in the resulting Cursor
+        String sortOrder =
+                SQLiteDatabaseHelper.TABLE_STRINGS_VALUE + " DESC";
+        try{
+            Cursor cursor = db.query(
+                SQLiteDatabaseHelper.TABLE_STRINGS_TABLENAME,
+                projektion,
+                null, null, null, null,
+                sortOrder);
+
+            // Alternative Query
+            // Cursor cursor =db.rawQuery("SELECT * FROM " + SQLiteDatabaseHelper.TABLE_STRINGS_TABLENAME , null);
+
+
+            ArrayList<String> liste = new ArrayList<String>();
+
+            if (cursor.moveToFirst()) {
+                do {
+                    int valueIndex = cursor.getColumnIndex(SQLiteDatabaseHelper.TABLE_STRINGS_VALUE);
+                    String str = cursor.getString(valueIndex);
+                    liste.add(str);
+                } while (cursor.moveToNext());
+            }
+
+            ArrayAdapter adapter = new ArrayAdapter(this,
+                    android.R.layout.simple_list_item_1, liste);
+
+            mlist.setAdapter(adapter);
+
+            Log.d("Unteractivity", "TempCode");
+        }catch (Exception e) {
+                 e.getMessage();
+        }
     }
 
 
