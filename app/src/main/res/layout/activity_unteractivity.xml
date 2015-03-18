@@ -27,5 +27,10 @@
         android:text="@string/readTextFromDB"
         android:layout_below="@+id/btn_insert_text"/>
 
+    <ListView
+        android:id="@+id/listview_DBlist"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_read_text"/>
 
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.example.simonisb.myapplication;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.UrlQuerySanitizer;
@@ -10,8 +11,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.simonisb.myapplication.db.SQLiteDatabaseHelper;
@@ -26,6 +33,8 @@ public class Unteractivity extends ActionBarActivity {
     EditText editText;
     Button btn_insert;
     Button btn_read;
+    ListView mlist;
+
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
@@ -35,6 +44,7 @@ public class Unteractivity extends ActionBarActivity {
         editText = (EditText) findViewById( R.id.editText_zum_einfuegen);
         btn_insert = (Button) findViewById( R.id.btn_insert_text);
         btn_read = (Button) findViewById( R.id.btn_read_text);
+        mlist = (ListView) findViewById( R.id.listview_DBlist);
 
 
         dbhelper = new SQLiteDatabaseHelper( this);
@@ -56,14 +66,15 @@ public class Unteractivity extends ActionBarActivity {
         btn_read.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                String[] projektion = {SQLiteDatabaseHelper.TABLE_STRINGS_VALUE};
                 try{
-                    /*Cursor cursor = db.query(
+                    Cursor cursor2 = db.query(
                         SQLiteDatabaseHelper.TABLE_STRINGS_TABLENAME,
-                        new String[]{SQLiteDatabaseHelper.TABLE_STRINGS_VALUE},
+                        projektion,
                         null, null, null, null, null);
-*/
+
                        Cursor cursor =db.rawQuery("SELECT * FROM " + SQLiteDatabaseHelper.TABLE_STRINGS_TABLENAME , null);
+
 
                     ArrayList<String> liste = new ArrayList<String>();
 
@@ -74,6 +85,12 @@ public class Unteractivity extends ActionBarActivity {
                             liste.add(str);
                         } while (cursor.moveToNext());
                     }
+
+                    ArrayAdapter adapter = new ArrayAdapter(Unteractivity.this,
+                            android.R.layout.simple_list_item_1, liste);
+
+                    mlist.setAdapter(adapter);
+
                     Log.d("Unteractivity", "TempCode");
                 }catch (Exception e) {
                          e.getMessage();
