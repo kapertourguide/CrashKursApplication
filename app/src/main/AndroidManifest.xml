@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Unteractivity"
+            android:name=".DBListActivity"
             android:label="@string/title_activity_unteractivity" >
         </activity>
         <activity

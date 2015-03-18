@@ -34,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "Text", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(MainActivity.this, Unteractivity.class));
+                startActivity(new Intent(MainActivity.this, DBListActivity.class));
             }
         });
 

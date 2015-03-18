@@ -28,7 +28,7 @@ import com.example.simonisb.myapplication.db.SQLiteDatabaseHelper;
 import java.util.ArrayList;
 
 
-public class Unteractivity extends ActionBarActivity {
+public class DBListActivity extends ActionBarActivity {
 
     private static final String TAG = "Unteractivity";
     SQLiteDatabaseHelper dbhelper;
@@ -57,13 +57,8 @@ public class Unteractivity extends ActionBarActivity {
         btn_insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    ContentValues values = new ContentValues();
-                    values.put(SQLiteDatabaseHelper.TABLE_STRINGS_VALUE, editText.getText().toString());
-                    long insertID = db.insert(SQLiteDatabaseHelper.TABLE_STRINGS_TABLENAME, null, values);
-                }catch (Exception e){
-                    String message = e.getMessage();
-                }
+                insertTextInDB();
+                showElementsInList();
             }
         });
 
@@ -82,6 +77,16 @@ public class Unteractivity extends ActionBarActivity {
                 showElementsInList();
             }
         });
+    }
+
+    private void insertTextInDB() {
+        try {
+            ContentValues values = new ContentValues();
+            values.put(SQLiteDatabaseHelper.TABLE_STRINGS_VALUE, editText.getText().toString());
+            long insertID = db.insert(SQLiteDatabaseHelper.TABLE_STRINGS_TABLENAME, null, values);
+        }catch (Exception e){
+            String message = e.getMessage();
+        }
     }
 
     private void deleteClickedItem(View view) {
