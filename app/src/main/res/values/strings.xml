@@ -10,4 +10,6 @@
     <string name="btn_3">Enable Button 4</string>
     <string name="btn_4">Enable Button 3</string>
     <string name="title_activity_list">ListActivity</string>
+    <string name="insertTextInDB">Text in DB einfügen</string>
+    <string name="readTextFromDB">Texte aus DB auslesen</string>
 </resources>

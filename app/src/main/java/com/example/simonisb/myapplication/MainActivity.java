@@ -26,7 +26,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        sql = new SQLiteDatabaseHelper(this);
+
 
         tv_null = (TextView) findViewById(R.id.start_text);
         btn_1 = (Button) findViewById(R.id.btn_1);
@@ -34,6 +34,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "Text", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, Unteractivity.class));
             }
         });
 
