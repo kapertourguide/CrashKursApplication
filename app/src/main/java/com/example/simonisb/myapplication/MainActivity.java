@@ -33,7 +33,6 @@ public class MainActivity extends ActionBarActivity {
         btn_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Text", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(MainActivity.this, DBListActivity.class));
             }
         });
@@ -42,8 +41,7 @@ public class MainActivity extends ActionBarActivity {
         btn_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent blubb = new Intent(MainActivity.this, ListActivity.class);
-                startActivity(blubb);
+                startActivity(new Intent(MainActivity.this, ListActivity.class));
             }
         });
 
@@ -56,8 +54,6 @@ public class MainActivity extends ActionBarActivity {
                 btn_3.setEnabled(false);
                 btn_4.setEnabled(true);
                 increaseNumber();
-
-                Toast.makeText(MainActivity.this, "Button 3 geklickt", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -67,8 +63,6 @@ public class MainActivity extends ActionBarActivity {
                 btn_4.setEnabled(false);
                 btn_3.setEnabled(true);
                 increaseNumber();
-
-                Toast.makeText(MainActivity.this, "Button 4 geklickt", Toast.LENGTH_SHORT).show();
             }
         });
     }

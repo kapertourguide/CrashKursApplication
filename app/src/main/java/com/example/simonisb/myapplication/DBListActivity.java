@@ -38,6 +38,7 @@ public class DBListActivity extends ActionBarActivity {
     Button btn_read;
     ListView mlist;
     SQLiteDatabase db;
+    ArrayAdapter adapter;
 
 
     @Override
@@ -72,7 +73,7 @@ public class DBListActivity extends ActionBarActivity {
         mlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d(TAG, "onItemClick in Unteractivity");
+                Log.d(TAG, "onItemClick auf mlist in "+(DBListActivity.class).getName());
                 deleteClickedItem(view);
                 showElementsInList();
             }
@@ -124,7 +125,7 @@ public class DBListActivity extends ActionBarActivity {
                 } while (cursor.moveToNext());
             }
 
-            ArrayAdapter adapter = new ArrayAdapter(this,
+            adapter = new ArrayAdapter(this,
                     android.R.layout.simple_list_item_1, liste);
 
             mlist.setAdapter(adapter);
