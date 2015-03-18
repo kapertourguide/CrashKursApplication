@@ -51,7 +51,6 @@ public class DBListActivity extends ActionBarActivity {
         btn_read = (Button) findViewById( R.id.btn_read_text);
         mlist = (ListView) findViewById( R.id.listview_DBlist);
 
-
         dbhelper = new SQLiteDatabaseHelper( this);
         db = dbhelper.getReadableDatabase();
 
