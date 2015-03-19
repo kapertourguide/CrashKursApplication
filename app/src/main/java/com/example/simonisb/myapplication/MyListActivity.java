@@ -14,7 +14,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
-public class ListActivity extends ActionBarActivity {
+public class MyListActivity extends ActionBarActivity {
 
     ListView listview;
 
@@ -42,7 +42,7 @@ public class ListActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TextView tv = (TextView) view;
-                Toast.makeText(ListActivity.this, (position + 1) + ": " +tv.getText().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyListActivity.this, (position + 1) + ": " +tv.getText().toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }

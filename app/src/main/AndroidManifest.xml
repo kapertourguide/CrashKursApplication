@@ -21,8 +21,20 @@
             android:label="@string/title_activity_unteractivity" >
         </activity>
         <activity
-            android:name=".ListActivity"
+            android:name=".MyListActivity"
             android:label="@string/title_activity_list" >
+        </activity>
+
+        <provider
+            android:name=".contentprovider.MyContentProvider"
+            android:authorities="my.uri.authority.contentprovider"
+            android:enabled="true"
+            android:exported="false" >
+        </provider>
+
+        <activity
+            android:name=".ContentProviderListActivity"
+            android:label="@string/title_activity_content_provider_list" >
         </activity>
     </application>
 

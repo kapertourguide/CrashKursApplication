@@ -19,6 +19,7 @@ public class MainActivity extends ActionBarActivity {
     Button btn_2;
     Button btn_3;
     Button btn_4;
+    Button btn_start_CPactivity;
     TextView tv_null;
     SQLiteDatabaseHelper sql;
 
@@ -41,7 +42,7 @@ public class MainActivity extends ActionBarActivity {
         btn_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ListActivity.class));
+                startActivity(new Intent(MainActivity.this, MyListActivity.class));
             }
         });
 
@@ -63,6 +64,13 @@ public class MainActivity extends ActionBarActivity {
                 btn_4.setEnabled(false);
                 btn_3.setEnabled(true);
                 increaseNumber();
+            }
+        });
+        btn_start_CPactivity = (Button) findViewById( R.id.btn_start_contentprovider_listactivity);
+        btn_start_CPactivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, ContentProviderListActivity.class));
             }
         });
     }

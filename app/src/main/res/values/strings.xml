@@ -12,4 +12,7 @@
     <string name="title_activity_list">ListActivity</string>
     <string name="insertTextInDB">Text in DB einfügen</string>
     <string name="readTextFromDB">Texte aus DB auslesen</string>
+    <string name="title_activity_content_provider_list">ContentProviderListActivity</string>
+    <string name="btn_start_contentprovider_listactivity_text">ContentProvider Liste</string>
+    <string name="no_elements">keine Elemente in der DB vorhanden</string>
 </resources>
