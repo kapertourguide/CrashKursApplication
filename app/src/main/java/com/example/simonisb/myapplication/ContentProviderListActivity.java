@@ -43,7 +43,6 @@ public class ContentProviderListActivity extends ListActivity implements LoaderM
         setListAdapter(adapter);
     }
 
-
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
