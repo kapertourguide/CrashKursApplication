@@ -140,21 +140,34 @@ public class MyContentProvider extends ContentProvider {
         return false;
     }
 
+    // Die Query-Methode unseres ContentProviders wird aufgerufen um Abfragen auf die Datenbank zu starten
+    // Das Ergebnis ist ein Cursor.
+    // Dieser zeigt dann auf die Menge(Zeilen) der passenden Daten einer Tabelle.
+    // (z.B.: Alls Strings die mit 'STR' beginnen)
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
+
+        // In diesem QueryBuilder-Objekt, wird die Abfrage,
+        // die auf die Datenbank ausgeführt wird, zusammengebaut
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
 
-
+        // Die URI wird in einen eindeutigen Integerwert umgesetzt
+        // (so dass switch/case verwendet werden kann)
         int uriMatch = myURIMatcher.match(uri);
 
+        // switch -> welche Elemente sollen Abgefragt werden
         switch ( uriMatch){
+
+            // ELEMENT -> Es sollen alle Elemente abgefragt werden
             case ELEMENT:
                 // Tabelle setzen
                 builder.setTables(SQLiteDatabaseHelper.TABLE_STRINGS_TABLENAME);
                 // es werden alle Elemente abgefragt
                 // keine weiteren Abfrageoptionen nötig
                 break;
+
+            // ELEMENT_ID -> es soll ein ELEMENT mit einen bestimmten ID abgefragt werden
             case ELEMENT_ID:
                 // Tabelle setzen
                 builder.setTables(SQLiteDatabaseHelper.TABLE_STRINGS_TABLENAME);
@@ -164,23 +177,34 @@ public class MyContentProvider extends ContentProvider {
                 builder.appendWhere(SQLiteDatabaseHelper.TABLE_STRINGS_ID + " = " +uri.getLastPathSegment());
                 break;
 
+            // Wenn die übergebene URI dem URI-Matcher nicht bekannt ist
             default:
+                // werfe Exception
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }
 
+        // sicherstellen, dass Datenbank angesprochen werden kann
         if (database == null) {
             database = databaseHelper.getWritableDatabase();
         }
 
+        // Erstellen einer Cursor-Variablen
         Cursor cursor = null;
         try {
+            // über das builder-Objekt die Abfrage auf die Datenbank starten
+            // Beschreibung der query-Methode -> siehe AndroidDokumentation
             cursor = builder.query(database, projection, selection,
                     selectionArgs, null, null, sortOrder);
 
+            // Curser soll sich automatich aktualisieren wenn Änderungen
+            // an der URI (z.B. löschen, update) auftreten.
             cursor.setNotificationUri(getContext().getContentResolver(), uri);
+
         } catch (Exception e) {
             Log.e(getClass().getName(), "Fehler bei der Abfrage von Daten mit dem CP", e);
         }
+
+        // Rückgabe des Cursers der nun auf die Abfrage passenden Elemante enthält
         return cursor;
     }
 
