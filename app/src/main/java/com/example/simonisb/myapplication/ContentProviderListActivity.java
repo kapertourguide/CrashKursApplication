@@ -1,7 +1,5 @@
 package com.example.simonisb.myapplication;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.ListActivity;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
@@ -30,11 +28,11 @@ public class ContentProviderListActivity extends ListActivity implements LoaderM
         setContentView(R.layout.activity_content_provider_list);
 
         // In der oncreate Daten über CP abfragen und sofort anzeigen
-        fillData();
+        setAdapterToList();
         getListView().setDividerHeight(15);
     }
 
-    private void fillData() {
+    private void setAdapterToList() {
 
         getLoaderManager().initLoader(0, null, this);
         String[] from = new String[]{SQLiteDatabaseHelper.TABLE_STRINGS_ID, SQLiteDatabaseHelper.TABLE_STRINGS_VALUE };
@@ -46,7 +44,7 @@ public class ContentProviderListActivity extends ListActivity implements LoaderM
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        Uri uri = Uri.parse(MyContentProvider.CONTENT_URI+"/"+id);
+        Uri uri = Uri.parse(MyContentProvider.CONTENT_URI_ALL_ELEMENTS +"/"+id);
         int rowsDeleted = getContentResolver().delete(uri, null, null);
         if (rowsDeleted > 0) {
             Toast.makeText(this, "Rows deleted: " + rowsDeleted + " ID: "+ id, Toast.LENGTH_LONG).show();
@@ -82,7 +80,7 @@ public class ContentProviderListActivity extends ListActivity implements LoaderM
         String[] projection = {SQLiteDatabaseHelper.TABLE_STRINGS_ID, SQLiteDatabaseHelper.TABLE_STRINGS_VALUE };
         return new CursorLoader(
                 this,
-                MyContentProvider.CONTENT_URI,
+                MyContentProvider.CONTENT_URI_ALL_ELEMENTS,
                 projection,
                 null,
                 null,
